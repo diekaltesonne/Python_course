@@ -1,0 +1,104 @@
+1. "Веб-форма для настройки и управления умным домом должна открываться в корне сайта, содержать 4 input’а c именами (name=...): bedroom_target_temperature, hot_water_target_temperature, bedroom_light, bathroom_light." Нет, веб-форма уже настроена по адресу /control и ничего больше трогать не надо.
+2. "Реализовать автоматически опрос контроллера в фоне каждую секунду (django celery) и реакцию на некоторые события." Нет, в текущем стартовом задании уже настроена работа с опросом раз в 5 секунд, тоже ничего трогать не надо.
+3. Веб-форма управления и задача опроса контроллера две независимые части проекта, каждая часть отдельно от другой получает данные от API, обрабатывает их и при необходимости отправлет в API. Реакция на ошибки тоже независимая.
+4. Веб-форма может валидировать данные и отправляет только корректные значения, но грейдер будет посылать некорректные данные напрямую POST-запросом, поэтмоу требуется дополнительная валидация данных формы на стороне сервера.
+5. Аккуратней с параметром SECRET_KEY в settings.py, я вначале сгоряча прописал туда свой токен от API умного дома, после исправления назад получил +10 баллов грейдера.
+6. Как уже тут писали в комментариях, посылать данные на изменение и через API, и в базу данных, нужно только те, которые отличаются от уже сохранненных.
+7. Настройка celery на Windows.
+Сразу отмечу, можно с этим не возится, можно писать код и отправлять грейдеру. Но если хочется поиграться, то wellcome. Все программы я ставил с виртуальным окружением.
+Потребуется порт Redis для Windows, я использовал вот этот: https://github.com/microsoftarchive/redis/releases/tag/win-3.2.100 Ставится с настройками по умолчанию внимания дальше не требует.
+Питон нужен не выше версии 3.6, т.к. с 3.7 "acync" стало зарезервированым словом и celery падет с ошибкой.
+Celery у меня версии 4.4.0 (cliffs), ставил через менеджер пакетов.
+
+После того как все установленно, можно запускать. Сначала запускаем worker, который и будет испольнять задачу:
+celery -A coursera_house.celery:app worker --pool=solo -l info
+
+-------------- celery@DESKTOP-3NLDE7J v4.4.0 (cliffs)
+
+--- ***** -----
+
+-- ******* ---- Windows-10-10.0.18362-SP0 2020-01-02 18:22:25
+
+- *** --- * ---
+
+- ** ---------- [config]
+
+- ** ---------- .> app: proj:0x4366a10
+
+- ** ---------- .> transport: redis://127.0.0.1:6379//
+
+- ** ---------- .> results: redis://127.0.0.1:6379/
+
+- *** --- * --- .> concurrency: 4 (solo)
+
+-- ******* ---- .> task events: OFF (enable -E to monitor tasks in this worker)
+
+--- ***** -----
+
+-------------- [queues]
+
+.> celery exchange=celery(direct) key=celery
+
+[tasks]
+
+. coursera_house.core.tasks.smart_home_manager
+
+[2020-01-02 18:22:25,360: INFO/MainProcess] Connected to redis://127.0.0.1:6379//
+
+[2020-01-02 18:22:25,376: INFO/MainProcess] mingle: searching for neighbors
+
+[2020-01-02 18:22:26,513: INFO/MainProcess] mingle: all alone
+
+[2020-01-02 18:22:26,531: WARNING/MainProcess] c:\users\icorw\appdata\local\programs\python\python37-32\lib\site-packages\celery\fixups\django.py:203: UserWarning: Using settings.DEBUG leads to a memory
+
+leak, never use this setting in production environments!
+
+leak, never use this setting in production environments!''')
+
+[2020-01-02 18:22:26,532: INFO/MainProcess] celery@DESKTOP-3NLDE7J ready.
+
+Наш worker готов и ждет, чтобы ему передали задачу на выполение. Это можно сделать вызовом из кода, но у нас будет еще один процесс, который будет запускать задачу каждые пять секунд. В отдельной консоли запускаем:
+
+celery -A coursera_house.celery:app beat -l info
+
+Видим, что процесс запустился и запускает задачу smart_home_manager на исполнение каждые 5 секунд.
+
+celery beat v4.1.1 (latentcall) is starting.
+
+__ - ... __ - _
+
+LocalTime -> 2020-01-02 18:25:34
+
+Configuration ->
+
+. broker -> redis://127.0.0.1:6379//
+
+. loader -> celery.loaders.app.AppLoader
+
+. scheduler -> celery.beat.PersistentScheduler
+
+. db -> celerybeat-schedule
+
+. logfile -> [stderr]@%INFO
+
+. maxinterval -> 5.00 minutes (300s)
+
+[2020-01-02 18:25:34,840: INFO/MainProcess] beat: Starting...
+
+[2020-01-02 18:25:34,889: INFO/MainProcess] Scheduler: Sending due task Check Smart Home (coursera_house.core.tasks.smart_home_manager)
+
+[2020-01-02 18:25:39,879: INFO/MainProcess] Scheduler: Sending due task Check Smart Home (coursera_house.core.tasks.smart_home_manager)
+
+[2020-01-02 18:25:44,879: INFO/MainProcess] Scheduler: Sending due task Check Smart Home (coursera_house.core.tasks.smart_home_manager)
+
+В окошке с worker должны появится новые строки об обработке задачи:
+
+[2020-01-02 18:25:34,919: INFO/MainProcess] Received task: coursera_house.core.tasks.smart_home_manager[0a9fe32b-e4f0-4d7f-a410-b6be57303fa4]
+
+[2020-01-02 18:25:34,929: INFO/MainProcess] Starting new HTTPS connection (1): smarthome.webpython.graders.eldf.ru
+
+[2020-01-02 18:25:35,453: INFO/MainProcess] Starting new HTTPS connection (1): smarthome.webpython.graders.eldf.ru
+
+[2020-01-02 18:25:35,668: INFO/MainProcess] Task coursera_house.core.tasks.smart_home_manager[0a9fe32b-e4f0-4d7f-a410-b6be57303fa4] succeeded in 0.75s: 200
+
+Естественно все это должно происходить при работающем Redis, т.к. обмен данными происходит через него.

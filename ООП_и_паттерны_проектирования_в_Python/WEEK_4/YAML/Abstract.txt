@@ -1,0 +1,5 @@
+Дополнительные материалы могут помочь при решении данного задания:
+https://rollout.io/blog/yaml-tutorial-everything-you-need-get-started/
+https://habr.com/ru/post/270097/
+https://pyyaml.org/wiki/PyYAMLDocumentation
+https://yaml.org/spec/1.2/spec.html

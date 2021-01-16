@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AskPupkin</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="index.css">
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="http://jqueryui.com/resources/demos/external/jquery-mousewheel/jquery.mousewheel.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css">
+    <link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">
+    <script>
+        $( function() {
+            var spinner = $( ".spinner" ).spinner().val(5);
+        });
+    </script>
+</head>
+<body>
+    <div class="tb container">
+        <div class="tb__row row">
+            <div class="tb__row__col col-md-8">
+                <h1 class="tb__title">Stackoverflow</h1>
+                <input type="text" class="tb__input" placeholder="Search">
+            </div>
+            <div class="tb__row__col col-md-4">
+                <div class="tb__row__col__signin">
+                    <a href="#">log in</a>
+                    <a href="#">register</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="container__row row">
+            <div class="container__row__content col-md-8">
+                <div class="container__row__content__top_row row">
+                    <div class="container__row__content__top_row__avatar_container col-md-2">
+                        <div class="container__row__content__avatar_container__avatar large_avatar">
+                        </div>
+                        <div class="spinner_container">
+                            <input class="container__row__content__top_row__avatar_container__spinner spinner">
+                        </div>
+                    </div>
+                    <div class="container__row__content__top_row__avatar_container col-md-10">
+                        <h3 class="container__row__content__top_row__avatar_container__header">How to build a moon park?</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed metus nibh, pharetra eget tincidunt eget, tempus eget ex. Nulla facilisi. Integer ac placerat arcu. Pellentesque molestie justo vel nunc ornare dapibus. Curabitur semper elit vitae varius blandit. Morbi in aliquam sapien. Fusce mattis odio eu ultrices gravida. Aenean sollicitudin, quam eu faucibus laoreet, elit eros accumsan felis, nec finibus augue augue at lectus. Vivamus erat purus, placerat sed ligula a, blandit gravida orci. Integer tristique neque turpis, dictum tincidunt arcu aliquam ac.
+                        </p>
+                        <p>Tags:
+                            <a href="#" class="container__row__content__top_row__avatar_container__tag">black-jack</a>
+                            <a href="#" class="container__row__content__top_row__avatar_container__tag">bender</a>
+                        </p>
+                    </div>
+                </div>
+                <div class="container__content__middle_row row">
+                    <div class="container__content__middle_row__avatar col-md-2">
+                        <div class="container__row__content__avatar_container__avatar">
+                        </div>
+                        <div class="spinner_container">
+                            <input class="spinner" name="value">
+                        </div>
+                    </div>
+                    <div class="container__content__middle_row__content col-md-10">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed metus nibh, pharetra eget tincidunt eget, tempus eget ex. Nulla facilisi. Integer ac placerat arcu. Pellentesque molestie justo vel nunc ornare dapibus. Curabitur semper elit vitae varius blandit. Morbi in aliquam sapien. Fusce mattis odio eu ultrices gravida.
+                        </p>
+                    </div>
+                </div>
+                <div class="container__content__middle_row row">
+                    <div class="container__content__middle_row__avatar col-md-2">
+                        <div class="container__row__content__avatar_container__avatar">
+                        </div>
+                        <div class="spinner_container">
+                            <input class="spinner" name="value">
+                        </div>
+                    </div>
+                    <div class="container__content__middle_row__content col-md-10">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed metus nibh, pharetra eget tincidunt eget, tempus eget ex. Nulla facilisi. Integer ac placerat arcu. Pellentesque molestie justo vel nunc ornare dapibus. Curabitur semper elit vitae varius blandit. Morbi in aliquam sapien. Fusce mattis odio eu ultrices gravida.
+                        </p>
+                    </div>
+                </div>
+                <div class="container__content__lower_row">
+                    <textarea class="container__content__lower_row__textarea" placeholder="Enter your answer here"></textarea>
+                    <br><input type="submit" value="Answer">
+                </div>
+            </div>
+            <div class="container__row__sidebar col-md-4">
+                <div class="container__row__sidebar__tags">
+                    <h3>Popular Tags</h3>
+                    <a href="#">coursera</a>
+                    <a href="#">python</a>
+                    <a href="#">mysql</a>
+                    <a href="#">django</a>
+                </div>
+                <div class="container__row__sidebar__members">
+                    <h3>Best Members</h3>
+                    <div><a href="#">Mr. Freeman</a></div>
+                    <div><a href="#">Dr. House</a></div>
+                    <div><a href="#">Bender</a></div>
+                    <div><a href="#">Queen Victoria</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

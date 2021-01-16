@@ -1,2 +1,1 @@
-# PYTHON_COURSE
-Python mipt course
+PYTHON_COURSE

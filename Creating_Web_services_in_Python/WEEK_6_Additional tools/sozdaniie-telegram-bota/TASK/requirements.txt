@@ -1,0 +1,2 @@
+pyTelegramBotAPI==3.6.6
+redis==3.2.1
