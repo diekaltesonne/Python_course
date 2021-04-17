@@ -1,6 +1,8 @@
 # [Программирование на Python Specialization](https://www.coursera.org/specializations/programming-in-python)
 ## [Погружение в Python](https://www.coursera.org/learn/diving-in-python?specialization=programming-in-python)
 ### Первые шаги
+- [Python: основы и применение](https://stepik.org/course/512/syllabus)
+- [Программирование на Python](https://stepik.org/course/67/syllabus)
 ### Базовые типы и конструкции
 ### Организация кода и окружение
 - [Проверка установки Python](https://github.com/diekaltesonne/Python_course/tree/main/%D0%9F%D0%BE%D0%B3%D1%80%D1%83%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5_%D0%B2_Python/WEEK_1)
